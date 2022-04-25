@@ -14,7 +14,12 @@
 </head>
 
 <body>
-    <div><input id="start" type="text" placeholder="Nhập địa chỉ của bạn"> </div><br>
+    <form autocomplete="off">
+        <div class="autocomplete" style="width:300px;">
+            <input id="start" type="text" name="myCountry" placeholder="Nhập địa chỉ của bạn" autocomplete="off">
+        </div>
+    </form>
+
     <div id='map'></div>
     <div id="geocoder" class="geocoder"></div>
     <script src="script.js"></script>
