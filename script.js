@@ -51,14 +51,12 @@ async function search() {
         method: 'GET',
         cache: 'no-cache'
     };
-
     let url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
         document.getElementById('start').value +
         '.json?limit=6&country=vn&proximity=ip&types=place,postcode,address&access_token=' + accessToken;
     let responseJson = await fetchUrl(url, init);
 
     addresses = responseJson.features;
-    return responseJson;
 }
 
 async function getRoute(start, end) {
@@ -125,8 +123,8 @@ function autocomplete(inp) {
     the text field element and an array of possible autocompleted values:*/
     var currentFocus;
     /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function (e) {
-        search();
+    inp.addEventListener("input", async function (e) {
+        await search();
         var a, b, i, val = this.value;
         /*close any already open lists of autocompleted values*/
         closeAllLists();
@@ -171,6 +169,7 @@ function autocomplete(inp) {
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
                     closeAllLists();
+                    addresses = [];
                 });
                 a.appendChild(b);
             }
