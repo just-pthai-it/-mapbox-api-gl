@@ -1,6 +1,4 @@
 var addresses = [];
-
-
 const accessToken =
     'pk.eyJ1IjoicHRoYWktaXQtZGV2IiwiYSI6ImNsMmI4enZrMjBjd3UzZmxlcml5NW0ydW0ifQ.QuS_NNfgeHo62B-f-ZzCHA';
 let marker1 = new mapboxgl.Marker();
@@ -32,9 +30,17 @@ const geolocate = new mapboxgl.GeolocateControl({
 
 
 map.addControl(geolocate);
-geolocate.on('geolocate', (e) => customGeolocate(e));
+geolocate.on('geolocate', async (e) => customGeolocate(e));
 
-function customGeolocate(e) {
+async function customGeolocate(e) {
+    const init = {
+        method: 'GET',
+        cache: 'no-cache'
+    };
+    let url = 'https://api.mapbox.com/geocoding/v5/mapbox.places/' +
+        e.coords.longitude + ',' + e.coords.longitude + '.json?access_token=' + accessToken
+    let responseJson = await fetchUrl(url, init);
+    console.log(responseJson);
     marker1.remove();
     getRoute([e.coords.longitude, e.coords.latitude], end);
 }
